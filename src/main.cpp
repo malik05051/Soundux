@@ -55,6 +55,13 @@ int main(int argc, char **arguments)
         Fancy::fancy.logTime().success() << "Enabling debug features" << std::endl;
     }
 
+#if defined(__linux__)
+    if (Soundux::Objects::Cli::isCommand(args))
+    {
+        return Soundux::Objects::Cli::runClient(args);
+    }
+#endif
+
     backward::SignalHandling crashHandler;
     gGuard = std::make_shared<guardpp::guard>("soundux-guard");
 
@@ -65,6 +72,11 @@ int main(int argc, char **arguments)
         Fancy::fancy.message() << "  -h --help        description of launch arguments" << std::endl;
         Fancy::fancy.message() << "  --hidden         start application hidden to taskbar" << std::endl;
         Fancy::fancy.message() << "  --reset-mutex    fix 'Another instance is already running! error'" << std::endl;
+#if defined(__linux__)
+        Fancy::fancy.message() << "  play <name|id>   play a sound in the running instance" << std::endl;
+        Fancy::fancy.message() << "  stop             stop all sounds in the running instance" << std::endl;
+        Fancy::fancy.message() << "  list             list all sounds of the running instance" << std::endl;
+#endif
         return 0;
     }
 
@@ -109,6 +121,9 @@ int main(int argc, char **arguments)
 
     gGui = std::make_unique<Soundux::Objects::WebView>();
     gGui->setup();
+#if defined(__linux__)
+    gCliServer.start();
+#endif
 
     if (std::find(args.begin(), args.end(), "--hidden") == args.end())
     {
@@ -127,6 +142,9 @@ int main(int argc, char **arguments)
 
     gGui->mainLoop();
 
+#if defined(__linux__)
+    gCliServer.stop();
+#endif
     gAudio.destroy();
 #if defined(__linux__)
     if (gAudioBackend)

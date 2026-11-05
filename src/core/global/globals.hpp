@@ -5,6 +5,7 @@
 #elif defined(_WIN32)
 #include <helper/audio/windows/winsound.hpp>
 #endif
+#include <core/cli/cli.hpp>
 #include <core/config/config.hpp>
 #include <core/hotkeys/hotkeys.hpp>
 #include <core/objects/data.hpp>
@@ -34,6 +35,9 @@ namespace Soundux
         inline Objects::Config gConfig;
         inline Objects::YoutubeDl gYtdl;
         inline Objects::Hotkeys gHotKeys;
+#if defined(__linux__)
+        inline Objects::CliServer gCliServer;
+#endif
         inline Objects::Settings gSettings;
         inline std::unique_ptr<Objects::Window> gGui;
 
