@@ -131,6 +131,16 @@ You can grab the latest release from the Snap Store or Flathub
 ## <img src="https://www.vectorlogo.zone/logos/microsoft/microsoft-icon.svg" height="20"/> Windows
 Download our installer or portable from [the latest release](https://github.com/Soundux/Soundux/releases/latest)
 
+# ⌨️ Command line (Linux)
+
+While Soundux is running (a hidden start with `soundux --hidden` is enough), you can control it from a terminal:
+
+```bash
+soundux play <name|id>   # play a sound: exact name, id, or a unique partial name
+soundux stop             # stop all playing sounds
+soundux list             # list all sounds as <id>, <tab>, <name>
+```
+
 # 🔨 Compilation
 
 ## 🔗 Build Dependencies
